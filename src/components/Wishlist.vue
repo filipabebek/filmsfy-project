@@ -207,4 +207,45 @@ function showNotification(message, isError = false) {
 .notification.error {
     background-color: #f44336; 
 }
+
+@media (max-width: 1024px) {
+  .wishlist-item {
+    width: 150px;
+  }
+
+  .notification {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .wishlist-item {
+    width: 120px;
+  }
+
+  .notification {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-container {
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+  }
+
+  .wishlist-item {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .notification {
+    font-size: 0.7rem;
+    padding: 6px;
+    top: 10px;
+  }
+}
+
 </style>

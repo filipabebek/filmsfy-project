@@ -559,4 +559,100 @@ body {
 .popup-message.success {
   background-color: red 
 }
+
+
+@media (max-width: 1024px) {
+  .background-container {
+    height: 100vh;
+  }
+
+  .movie-info-container {
+    padding: 15px;
+    width: 80% !important; 
+    left: 50%;
+    transform: translateX(-50%); 
+    margin-top: 30px;
+  }
+
+  #movie-title {
+    font-size: 1.8rem;
+  }
+
+  #movie-description, #movie-type, #movie-rating {
+    font-size: 0.9rem;
+  }
+
+  #play-button, .btn.wishlist-btn {
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .background-container {
+    height: 100vh;
+  }
+
+  .movie-info-container {
+    padding: 10px;
+    width: 100%; 
+    top: 150px; 
+  }
+
+  #movie-title {
+    font-size: 1.5rem;
+  }
+
+  #movie-description, #movie-type, #movie-rating {
+    font-size: 0.8rem;
+  }
+
+  #play-button, .btn.wishlist-btn {
+    padding: 6px 12px;
+  }
+
+  .swiper-slide {
+    width: calc(50% - 5px) !important;
+  }
+
+  .swiper-slide img {
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .background-container {
+    height: 100vh;
+  }
+
+  .movie-info-container {
+    padding: 5px;
+    width: 100%; 
+    top: 100px; 
+  }
+
+  #movie-title {
+    font-size: 1.2rem;
+  }
+
+  #movie-description, #movie-type, #movie-rating {
+    font-size: 0.7rem;
+  }
+
+  #play-button, .btn.wishlist-btn {
+    padding: 5px 10px;
+  }
+
+  .swiper-slide {
+    width: calc(50% - 5px) !important;
+  }
+
+  .swiper-slide img {
+    height: 200px;
+  }
+
+  .popup-message {
+    padding: 12px 15px;
+    font-size: 10px;
+  }
+}
 </style>

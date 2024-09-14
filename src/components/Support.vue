@@ -172,4 +172,66 @@ const handleSubmit = () => {
 .back-btn:hover {
     color: red;
 }
+
+
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 15px !important;
+    max-width: 80% !important;
+    margin: auto;
+  }
+
+  .form-header h2 {
+    font-size: 20px;
+  }
+
+  .form-header p {
+    font-size: 14px;
+  }
+
+  .contact-form .form-group input,
+  .contact-form .form-group textarea {
+    font-size: 14px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .back-btn {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-container {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .form-header h2 {
+    font-size: 18px;
+  }
+
+  .form-header p {
+    font-size: 12px;
+  }
+
+  .contact-form .form-group input,
+  .contact-form .form-group textarea {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .submit-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .back-btn {
+    font-size: 12px;
+  }
+}
+
 </style>

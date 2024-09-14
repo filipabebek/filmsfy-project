@@ -832,4 +832,130 @@ body{
 .popup-message.success {
   background-color: red
 }
+
+@media (max-width: 768px) {
+    .swiper-slide {
+        width: calc(50% - 5px) !important;
+    }
+
+    .heading {
+        font-size: 1rem;
+        margin: auto;
+    }
+
+    .popup-header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .popup-image {
+        width: 100px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .popup-title {
+        font-size: 20px;
+    }
+
+    .popup-description {
+        font-size: 14px;
+    }
+
+    .review-input {
+        height: 80px;
+    }
+
+    .submit-review-btn, .wishlist-btn {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+
+    .wishlist-btn {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .overlayer{
+    position: absolute;
+    left: 50%;
+    margin-top: -10px;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 88%;
+    background-color: rgba(234, 32, 32, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.more-btn{
+    width: 120px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-family: Montserrat, sans-serif;
+    border-radius: 20px;
+    box-shadow: 2px 2px 30px rgba(0,0,0,0.2);
+    margin-top: 10%;
+}
+.more-btn:hover{
+    color:white;
+    background-color: rgba(234,32,32);
+    transition: all ease 0.3s;
+}
+.popup-message {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+    .swiper-slide {
+        width: calc(50% - 5px);
+    }
+    .heading {
+        font-size: 0.9rem;
+    }
+
+    .popup-content {
+        width: 90%;
+        max-width: 360px;
+        padding: 10px;
+    }
+
+    .popup-image {
+        width: 80px;
+    }
+
+    .popup-title {
+        font-size: 18px;
+    }
+
+    .popup-description {
+        font-size: 12px;
+    }
+
+    .review-input {
+        height: 60px;
+    }
+
+    .submit-review-btn, .wishlist-btn {
+        font-size: 10px;
+        padding: 6px 12px;
+    }
+
+    .wishlist-btn {
+        margin-left: 100px;
+        margin-top: 10px;
+    }
+    .popup-message {
+    padding: 12px 15px;
+    font-size: 10px;
+  }
+}
 </style>

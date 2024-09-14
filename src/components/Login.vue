@@ -223,4 +223,51 @@ const handleSignUp = () => {
 .form-container a:hover {
     text-decoration: underline;
 }
+
+
+@media (max-width: 768px) {
+  .auth-form {
+    padding: 20px;
+  }
+
+  .auth-form h2, .form-container h3 {
+    font-size: 24px;
+  }
+
+  .form-container label, .form-container input {
+    font-size: 14px;
+  }
+
+  .form-container button {
+    font-size: 16px;
+  }
+
+  .message {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .auth-form h2, .form-container h3 {
+    font-size: 20px;
+  }
+
+  .form-container label, .form-container input {
+    font-size: 12px;
+  }
+
+  .form-container button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .message {
+    font-size: 10px;
+  }
+}
 </style>

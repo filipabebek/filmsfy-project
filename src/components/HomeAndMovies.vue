@@ -113,7 +113,7 @@ onMounted(() => {
     <section class="home swiper" id="home">
       <SwiperComponent class="homeSwiper">
         <SwiperSlide v-for="(slide, index) in slides" :key="index" class="container">
-          <img :src="slide.image" :alt="slide.alt">
+          <img :src="slide.image" :alt="slide.alt" class="slide-image">
           <div class="home-text">
             <span>{{ slide.category }}</span>
             <h1>{{ slide.title }}</h1>
@@ -165,117 +165,265 @@ onMounted(() => {
     </section>
 
     <div class="copyright">
-        <p>&#169; Filipa Bebek, Boris Vujica All Right Reserved.</p>
-
+      <p>&#169; Filipa Bebek, Boris Vujica All Right Reserved.</p>
     </div>
   </div>
 </template>
 
 <style scoped>
-*{
+* {
   padding: 0;
 }
 
-.copyright{
-    padding: 20px;
-    text-align: center;
-    color: var(--bg-color);
+.copyright {
+  padding: 20px;
+  text-align: center;
+  color: var(--bg-color);
 }
 
 .movies {
   padding: 20px;
 }
 
-.home-text{
-    z-index: 1000;
-    padding: 0 100px;
-    margin-top: 400px;
-}
-.home-text span{
-    color: var(--bg-color);
-    font-weight: 500;
-    text-transform: uppercase;
-}
-.home-text h1{
-    color: var(--bg-color);
-    font-size: 4rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+.home-text {
+  z-index: 1000;
+  padding: 0 100px;
+  margin-top: 400px;
 }
 
-.play{
-    position: absolute;
-    right: 4rem;
-    bottom: 10%;
+.home-text span {
+  color: var(--bg-color);
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
-.play .bx{
-    background: var(--bg-color);
-    padding: 10px;
-    font-size: 2rem;
-    border-radius: 50%;
-    border: 4px solid rgb(2,3,7,0.4);
-    color: var(--main-color);
+.home-text h1 {
+  color: var(--bg-color);
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
-.play .bx:hover{
-    background: var(--main-color);
-    color: var(--bg-color);
-    transition: 0.2s all linear;
+.play {
+  position: absolute;
+  right: 4rem;
+  bottom: 10%;
 }
 
-.btn{
-    padding: 0.7rem 1.4rem;
-    background: var(--main-color);
-    color: var(--bg-color);
-    font-weight: 400;
-    border-radius: 0.5rem;
+.play .bx {
+  background: var(--bg-color);
+  padding: 10px;
+  font-size: 2rem;
+  border-radius: 50%;
+  border: 4px solid rgb(2, 3, 7, 0.4);
+  color: var(--main-color);
 }
 
-.btn:hover{
-    background: red;
+.play .bx:hover {
+  background: var(--main-color);
+  color: var(--bg-color);
+  transition: 0.2s all linear;
 }
 
-.movies-container{
-    max-width: 1300px;
-    margin-right: auto;
-    margin-left: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px,auto));
-    gap: 1rem;
-    margin-top: 2rem;
+.btn {
+  padding: 0.7rem 1.4rem;
+  background: var(--main-color);
+  color: var(--bg-color);
+  font-weight: 400;
+  border-radius: 0.5rem;
 }
 
-.box .box-img{
-    width: 100%;
-    height: 270px;
+.btn:hover {
+  background: red;
 }
 
-.box .box-img img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.movies-container {
+  max-width: 1300px;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, auto));
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
-.box .box-img img:hover{
-    transform: translateY(-10px);
-    transition: 0.2s all linear;
+.box .box-img {
+  width: 100%;
+  height: 270px;
 }
 
-.box h3{
-    font-size: 0.9rem;
-    font-weight: 500;
+.box .box-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.box span{
-    font-size: 13px;
+.box .box-img img:hover {
+  transform: translateY(-10px);
+  transition: 0.2s all linear;
 }
 
-.coming{
+.box h3 {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.box span {
+  font-size: 13px;
+}
+
+.coming {
   padding: 70px;
 }
 
 .comingSwiper {
   width: 100%;
   height: auto;
-}</style>
+}
+
+
+
+@media (max-width: 1024px) {
+  .home-text {
+    padding: 0 50px;
+    margin-top: 600px !important; 
+  }
+
+  .home-text h1 {
+    font-size: 3rem;
+  }
+
+  .home-text span {
+    font-size: 1rem;
+  }
+
+  .homeSwiper,
+  .comingSwiper {
+    height: auto;
+  }
+
+  .play {
+    right: 2rem;
+  }
+
+  .coming {
+    padding: 30px;
+  }
+
+  .comingSwiper {
+    height: auto;
+    width: 100%; 
+  }
+
+  .swiper-slide {
+    min-width: 200px; 
+  }
+}
+
+@media (max-width: 768px) {
+  .home-text {
+    padding: 0 30px;
+    margin-top: 200px;
+  }
+
+  .home-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .home-text span {
+    font-size: 0.9rem;
+  }
+
+
+  .movies-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+  }
+
+  .coming {
+    padding: 40px;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+  }
+
+  .coming {
+    padding: 20px; 
+  }
+
+  .comingSwiper {
+    height: auto;
+    width: 100%; 
+  }
+
+  .swiper-slide {
+    min-width: 150px; 
+  }
+
+  .swiper-slide img {
+    object-fit: cover; 
+  }
+
+}
+
+@media (max-width: 480px) {
+  .home-text {
+    padding: 0 20px;
+    margin-top: 100px;
+  }
+
+  .home-text h1 {
+    font-size: 2rem;
+  }
+
+  .home-text span {
+    font-size: 0.8rem;
+  }
+
+  .movies-container {
+    grid-template-columns: repeat(auto-fit, minmax(120px, auto));
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+  }
+
+  .box h3 {
+    font-size: 0.8rem;
+  }
+
+  .box span {
+    font-size: 12px;
+  }
+
+  .coming {
+    padding: 30px;
+  }
+
+  .play .bx {
+    font-size: 1.5rem;
+    padding: 8px;
+  }
+
+  .play {
+    right: 1rem;
+  }
+
+  .coming {
+    padding: 10px; 
+  }
+
+  .comingSwiper {
+    height: auto;
+    width: 100%; 
+  }
+
+  .swiper-slide {
+    min-width: 120px;
+  }
+  .swiper-slide img {
+    object-fit: cover;
+  }
+
+}
+</style>
