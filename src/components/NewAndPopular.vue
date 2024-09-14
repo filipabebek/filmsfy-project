@@ -3,7 +3,6 @@ import { ref, onMounted, reactive } from 'vue';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
 
-// importanje slika buduci da nam drugacije ne radi
 import itEndsWithUsImage from '@/assets/img/itendswithus.jpg';
 import twistersImage from '@/assets/img/twisters.jpg';
 import borderlandsImage from '@/assets/img/borderlands.jpg';
@@ -35,7 +34,6 @@ import spiderManImage from '@/assets/img/spider-man.jpg';
 import dictatorImage from '@/assets/img/dictator.jpg';
 import smileImage from '@/assets/img/smile.jpg';
 
-// data za filmove
 const newMovies = ref([
         { title: "It Ends with Us", image: itEndsWithUsImage, duration: "2h 10min", genre: "Drama, Romance" },
         { title: "Twisters", image: twistersImage, duration: "2h 2min", genre: "Adventure, Action" },
@@ -75,7 +73,6 @@ const popularMovies = ref([
         { title: "Smile", image: smileImage, duration: "1h 55min", genre: "Horror, Crime" }
 ]);
 
-//informacije o filmovima
 const movieData = {
     "It Ends with Us": {
         description: "The first Colleen Hoover novel adapted for the big screen, tells the compelling story of Lily Bloom, a woman who overcomes a traumatic childhood to embark on a new life in Boston and chase a lifelong dream of opening her own business. A chance meeting with charming neurosurgeon Ryle Kincaid sparks an intense connection, but as the two fall deeply in love, Lily begins to see sides of Ryle that remind her of her parents' relationship.",
@@ -292,7 +289,6 @@ const movieData = {
 const showPopup = ref(false);
 const popupMessage = ref('');
 
-// Handle wishlist addition
 const handleWishlist = (movie) => {
   const loggedIn = localStorage.getItem('loggedIn') === 'true';
 
@@ -314,13 +310,11 @@ const handleWishlist = (movie) => {
     popupMessageVisible.value = true;
   }
 
-  // Hide the popup message after 5 seconds
   setTimeout(() => {
     popupMessageVisible.value = false;
   }, 5000);
 };
 
-// Swiper initialization
 onMounted(() => {
   new Swiper('.swiper', {
     slidesPerView: 5,
@@ -359,7 +353,7 @@ onMounted(() => {
 });
 
 const isPopupVisible = ref(false);
-const isUserLoggedIn = ref(localStorage.getItem('loggedIn') === 'true'); // Dynamically check login status
+const isUserLoggedIn = ref(localStorage.getItem('loggedIn') === 'true'); 
 const newReview = ref('');
 const popupMovie = reactive({
   id: '',
@@ -372,13 +366,10 @@ const popupMovie = reactive({
 });
 
 const openPopup = (movie) => {
-  // Extract the movie title
   const movieTitle = movie.title;
 
-  // Fetch the movie data from movieData using the movie title
   const movieDetails = movieData[movieTitle] || {};
 
-  // Update popupMovie with movie details
   popupMovie.id = movie.id || '';
   popupMovie.image = movie.image || '';
   popupMovie.title = movie.title || 'No title available';
@@ -387,7 +378,6 @@ const openPopup = (movie) => {
   popupMovie.duration = movie.duration || 'No duration available';
   popupMovie.reviews = movieDetails.reviews || [];
 
-  // Show the popup
   isPopupVisible.value = true;
 };
 
@@ -395,35 +385,28 @@ const submitReview = () => {
   const loggedIn = localStorage.getItem('loggedIn') === 'true';
 
   if (!loggedIn) {
-    // Show message asking the user to log in
     popupMessage.value = 'You need to be logged in to submit a review.';
     popupMessageVisible.value = true;
 
-    // Hide the popup message after 5 seconds
     setTimeout(() => {
       popupMessageVisible.value = false;
     }, 5000);
     return;
   }
 
-  // Ensure the review is not empty
   if (newReview.value.trim()) {
     const review = {
-      user: 'You', // Replace with the actual logged-in user's name
+      user: 'You', 
       text: newReview.value
     };
 
-    // Add the new review to the list of reviews for the movie
     popupMovie.reviews.push(review);
 
-    // Clear the review input field
     newReview.value = '';
 
-    // Show confirmation message
     popupMessage.value = 'Your review has been added!';
     popupMessageVisible.value = true;
 
-    // Hide the popup message after 5 seconds
     setTimeout(() => {
       popupMessageVisible.value = false;
     }, 5000);
@@ -434,10 +417,6 @@ const closePopup = () => {
   isPopupVisible.value = false;
 };
 
-
-// Example movie data
-
-// Event listener for More buttons (use this in parent component where you have the movie list)
 const onMoreButtonClick = (movieTitle) => {
   const movie = {
     image: 'path/to/movie-image.jpg',
@@ -450,16 +429,20 @@ const onMoreButtonClick = (movieTitle) => {
   openPopup(movie);
 };
 
-
 function addToWishlist(movie) {
-  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  
-  // Check if the movie is already in the wishlist
+  const userEmail = localStorage.getItem('userEmail'); 
+  if (!userEmail) {
+    alert('You need to be logged in to add to your wishlist');
+    return;
+  }
+
+  let wishlist = JSON.parse(localStorage.getItem(`${userEmail}_wishlist`)) || [];
+
   const movieExists = wishlist.find(item => item.title === movie.title);
-  
+
   if (!movieExists) {
     wishlist.push(movie);
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    localStorage.setItem(`${userEmail}_wishlist`, JSON.stringify(wishlist));
     showNotification(`${movie.title} has been added to your wishlist!`);
   } else {
     showNotification(`${movie.title} is already in your wishlist.`, true);
@@ -467,19 +450,17 @@ function addToWishlist(movie) {
 }
 
 function showNotification(message, isError = false) {
-  popupMessage.value = message;  // Update the notification message
-  showPopup.value = true;        // Show the popup
+  popupMessage.value = message; 
+  showPopup.value = true;     
 
-  // Automatically hide the popup after 2.5 seconds
   setTimeout(() => {
-    showPopup.value = false;     // Hide the popup
+    showPopup.value = false; 
   }, 2500);
 }
 </script>
 
 <template>
   <div id="app" @click="mustRefresh">
-    <!-- New Movies / Series Section -->
     <section class="coming">
       <h2 class="heading">New Movies / Series</h2>
       <div class="coming-container swiper">
@@ -503,7 +484,6 @@ function showNotification(message, isError = false) {
       </div>
     </section>
 
-    <!-- Popular Movies / Series Section -->
     <section class="coming">
       <h2 class="heading">Popular Movies / Series</h2>
       <div class="coming-container swiper">
@@ -527,7 +507,6 @@ function showNotification(message, isError = false) {
       </div>
     </section>
 
-    <!-- Popup -->
     <div v-if="isPopupVisible" class="popup-overlay" @click="closePopup">
       <div class="popup-content" @click.stop>
         <button class="close-btn" @click="closePopup">×</button>
@@ -558,7 +537,6 @@ function showNotification(message, isError = false) {
         </div>
       </div>
     </div>
-    <!-- Popup Message -->
     <div 
       id="popup-message" 
       :class="['popup-message', { show: showPopup, error: isErrorPopup, success: !isErrorPopup }]"
@@ -570,7 +548,7 @@ function showNotification(message, isError = false) {
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Montserrat:500'); /*Font*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500'); 
 
 *{
     font-family: "Montserrat", sans-serif;
@@ -623,8 +601,6 @@ body{
     margin-bottom: -2rem;
 }
 
-
-
 .overlayer{
     position: absolute;
     left: 50%;
@@ -675,16 +651,13 @@ body{
     }
 }
 
-/* Popup Styles */
-
-/* Custom Scrollbar for the Popup */
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8); /* Dark overlay */
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -699,7 +672,7 @@ body{
   width: 80%;
   max-width: 1000px;
   height: auto;
-  max-height: 80vh; /* Ensures content is scrollable if it overflows */
+  max-height: 80vh;
   overflow-y: auto;
   position: relative;
   color: #fff;
@@ -718,7 +691,6 @@ body{
   cursor: pointer;
 }
 
-/* Popup Header (Image and Details) */
 .popup-header {
   display: flex;
   align-items: flex-start;
@@ -753,7 +725,6 @@ body{
   margin-top: 20px;
 }
 
-/* Reviews Section */
 .popup-reviews {
   margin-bottom: 20px;
 }
@@ -774,7 +745,6 @@ body{
   line-height: 1.2;
 }
 
-/* Add Review Section */
 .add-review-section {
   margin-bottom: 20px;
 }
@@ -792,7 +762,7 @@ body{
 }
 
 .submit-review-btn {
-  background-color: #e50914; /* Netflix red */
+  background-color: #e50914;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -804,7 +774,7 @@ body{
 }
 
 .wishlist-btn {
-  background-color: #e50914; /* Netflix red */
+  background-color: #e50914; 
   border: none;
   color: white;
   padding: 10px 20px;
@@ -816,52 +786,50 @@ body{
   margin-left: 620px;
 }
 
-/* Custom Scrollbar */
 .popup-content::-webkit-scrollbar {
   width: 10px;
 }
 
 .popup-content::-webkit-scrollbar-track {
-  background: #1e1e1e; /* Dark track background */
+  background: #1e1e1e; 
   border-radius: 5px;
 }
 
 .popup-content::-webkit-scrollbar-thumb {
-  background: #ff0000; /* Netflix red for the scrollbar */
+  background: #ff0000; 
   border-radius: 5px;
-  border: 2px solid #1e1e1e; /* Adds some padding to the thumb */
+  border: 2px solid #1e1e1e; 
 }
 
 .popup-content::-webkit-scrollbar-thumb:hover {
-  background: #cc0000; /* Darker red on hover */
+  background: #cc0000; 
 }
 
-/*notifikacija za addanje filma u wishlistu*/
 .popup-message {
   position: fixed;
-  top: 65px; /* Position it from the top */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Adjust position to be fully centered */
+  top: 65px; 
+  left: 50%; 
+  transform: translateX(-50%); 
   padding: 15px 20px;
-  background-color: #333; /* Default dark background */
-  color: #fff; /* White text */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  font-size: 16px; /* Readable text size */
-  opacity: 0; /* Hidden by default */
-  transition: all 0.5s ease-in-out; /* Smooth show/hide */
-  z-index: 1000; /* Ensure it appears above other elements */
-  white-space: nowrap; /* Prevent wrapping for short messages */
-  max-width: 90%; /* Prevent it from stretching too wide */
-  overflow: hidden; /* Hide overflow if the message is too long */
+  background-color: #333; 
+  color: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  font-size: 16px; 
+  opacity: 0; 
+  transition: all 0.5s ease-in-out; 
+  z-index: 1000; 
+  white-space: nowrap; 
+  max-width: 90%; 
+  overflow: hidden; 
 }
 
 .popup-message.show {
   opacity: 1;
-  transform: translateX(-50%) translateY(0); /* Center the popup in place */
+  transform: translateX(-50%) translateY(0);
 }
 
 .popup-message.success {
-  background-color: red /* Green for success messages */
+  background-color: red
 }
 </style>

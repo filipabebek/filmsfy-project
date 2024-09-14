@@ -71,14 +71,13 @@ router.beforeEach((to, from, next) => {
 
     try {
         if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
-            // Redirect to login page if the route requires authentication and the user is not logged in
             next('/login');
         } else {
             next();
         }
     } catch (error) {
         console.error('Error in beforeEach hook:', error);
-        next('/error'); // Redirect to an error page or handle the error in some other way
+        next('/error');
     }
 });
 

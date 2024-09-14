@@ -11,16 +11,13 @@ const loginMessage = ref('');
 const signupMessage = ref('');
 const router = useRouter();
 
-// Function to check login status
 const checkLoginStatus = () => {
   const loggedIn = localStorage.getItem('loggedIn') === 'true';
   if (loggedIn) {
-    // If user is already logged in, redirect to home
     router.push('/');
   }
 };
 
-// Initialize login status on component mount
 onMounted(() => {
   checkLoginStatus();
 });
@@ -41,11 +38,10 @@ const handleLogin = () => {
   localStorage.setItem('loggedIn', 'true');
   localStorage.setItem('userEmail', loginEmail.value);
 
-  // Trigger a recheck of login status in navbar
   const event = new Event('loginStatusChanged');
   window.dispatchEvent(event);
 
-  router.push('/'); // Redirect to home page
+  router.push('/');
 };
 
 const handleSignUp = () => {
@@ -67,13 +63,14 @@ const handleSignUp = () => {
 
   localStorage.setItem(signupEmail.value, JSON.stringify(user));
   localStorage.setItem('loggedIn', 'true');
+  localStorage.setItem('userEmail', loginEmail.value); 
+
   localStorage.setItem('userEmail', signupEmail.value);
 
-  // Trigger a recheck of login status in navbar
   const event = new Event('loginStatusChanged');
   window.dispatchEvent(event);
 
-  router.push('/'); // Redirect to home page
+  router.push('/'); 
 };
 </script>
 
@@ -135,13 +132,12 @@ const handleSignUp = () => {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Dark overlay with 60% opacity */
-    z-index: 0; /* Place overlay behind other content */
+    background: rgba(0, 0, 0, 0.6); 
+    z-index: 0;
 }
 
-/* Styling for the auth-form section */
 .auth-form {
-    background: rgba(0, 0, 0, 0.85); /* Darker background with slight transparency */
+    background: rgba(0, 0, 0, 0.85);
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     max-width: 400px;
@@ -151,22 +147,19 @@ const handleSignUp = () => {
     position: relative;
 }
 
-/* Header styling inside form */
 .auth-form h2 {
     margin-bottom: 30px;
     font-size: 32px;
-    color: #e50914; /* Netflix red */
+    color: #e50914;
     text-align: center;
     font-weight: bold;
 }
 
-/* Form container styling */
 .form-container {
     display: flex;
     flex-direction: column;
 }
 
-/* Form section heading */
 .form-container h3 {
     margin-bottom: 30px;
     font-size: 32px;
@@ -175,13 +168,11 @@ const handleSignUp = () => {
     text-align: center;
 }
 
-/* Styling for labels */
 .form-container label {
     margin-bottom: 8px;
     color: #ddd;
 }
 
-/* Styling for input fields */
 .form-container input {
     padding: 15px;
     border: 1px solid #444;
@@ -189,16 +180,15 @@ const handleSignUp = () => {
     margin-bottom: 20px;
     font-size: 16px;
     width: 100%;
-    background: #333; /* Dark background for inputs */
-    color: #fff; /* Light text color */
+    background: #333;
+    color: #fff; 
 }
 
-/* Button styling */
 .form-container button {
     padding: 15px;
     border: none;
     border-radius: 5px;
-    background: #e50914; /* Netflix red */
+    background: #e50914;
     color: #fff;
     font-size: 18px;
     cursor: pointer;
@@ -206,21 +196,18 @@ const handleSignUp = () => {
     width: 100%;
 }
 
-/* Button hover effect */
 .form-container button:hover {
-    background: #f40612; /* Slightly lighter red */
-    transform: scale(1.02); /* Slightly enlarge on hover */
+    background: #f40612; 
+    transform: scale(1.02); 
 }
 
-/* Error message styling */
 .message {
-    color: #f40612; /* Bright red for error messages */
+    color: #f40612; 
     font-size: 14px;
     margin-top: -10px;
     margin-bottom: 20px;
 }
 
-/* Styling for links */
 .form-container p {
     font-size: 14px;
     text-align: center;
@@ -228,7 +215,7 @@ const handleSignUp = () => {
 }
 
 .form-container a {
-    color: #e50914; /* Match button color for consistency */
+    color: #e50914;
     text-decoration: none;
     font-weight: bold;
 }

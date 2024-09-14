@@ -3,13 +3,11 @@ import { ref, onMounted } from 'vue';
 import Swiper from 'swiper';
 import {Swiper as SwiperComponent, SwiperSlide} from 'swiper/vue';
 
-//homepage background images / slideri
 import venom from '@/assets/img/venom.jpg';
 import guardiansofthegalaxy from '@/assets/img/guardians of the galaxy.jpg';
 import movie300 from '@/assets/img/300 movie.jpg';
 import aquamanandthelostkingdom from '@/assets/img/aquaman and the lost kingdom.jpg';
 
-// opening this week filmovi
 import m1 from '@/assets/img/m1.jpg';
 import wolverine from '@/assets/img/wolverine.jpg';
 import batmanvssuperman from '@/assets/img/batmanvssuperman.jpg';
@@ -23,7 +21,6 @@ import jumanji from '@/assets/img/jumanji.jpg';
 import extinction from '@/assets/img/extincion.jpg';
 import howitends from '@/assets/img/how it ends.jpg';
 
-// coming soon filmovi
 import antman from '@/assets/img/ant man.jpg';
 import johnnyenglish from '@/assets/img/johhny english.jpg';
 import scream from '@/assets/img/scream.jpg';
@@ -40,7 +37,6 @@ import assassinscreed from '@/assets/img/assasin\'s creed.jpg';
 import warcraft from '@/assets/img/warcraft.jpg';
 import img1922 from '@/assets/img/1922.jpg';
 
-// Define reactive state for slides, movies, and comingMovies
 const slides = [
   { image: venom, alt: 'Venom', category: 'Marvel Universe', title: 'Venom: Let There Be Carnage', moreInfoLink: '#' },
   { image: guardiansofthegalaxy, alt: 'Guardians of the Galaxy', category: 'Marvel Universe', title: 'Guardians of the Galaxy 2', moreInfoLink: '#' },
@@ -81,11 +77,9 @@ const comingMovies = [
   { image: img1922, title: '1922', duration: '1h 42min', genre: 'Horror, Criminal', moreInfoLink: '#' }
 ];
 
-// Refs for Swiper instances
 const homeSwiper = ref(null);
 
 onMounted(() => {
-  // Header scroll effect
   window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
     if (window.scrollY > 0) {
@@ -95,7 +89,6 @@ onMounted(() => {
     }
   });
 
-  // Swiper initialization for the home section
   homeSwiper.value = new Swiper('.homeSwiper', {
     spaceBetween: 0,
     centeredSlides: true,
@@ -105,12 +98,9 @@ onMounted(() => {
     },
   });
 
-  // Swiper initialization for the coming soon section
   const moviesSection = ref(null);
   onMounted(() => {
-    // Check if the hash in the URL matches the section ID
     if (route.hash === '#movies') {
-      // Scroll to the movies section
       moviesSection.value.scrollIntoView({ behavior: 'smooth' });
     }
   });
@@ -120,7 +110,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <!-- Swiper Section -->
     <section class="home swiper" id="home">
       <SwiperComponent class="homeSwiper">
         <SwiperSlide v-for="(slide, index) in slides" :key="index" class="container">
@@ -134,7 +123,6 @@ onMounted(() => {
       </SwiperComponent>
     </section>
 
-    <!-- Opening this week -->
     <section class="movies" id="movies" ref="moviesSection">
       <h2 class="heading">Opening This Week</h2>
       <div class="movies-container">
@@ -148,7 +136,6 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- Coming Soon Section -->
     <section class="coming" id="coming">
       <h2 class="heading">Coming Soon</h2>
       <div class="coming-container swiper">
@@ -195,11 +182,9 @@ onMounted(() => {
     color: var(--bg-color);
 }
 
-
 .movies {
   padding: 20px;
 }
-
 
 .home-text{
     z-index: 1000;
@@ -251,8 +236,6 @@ onMounted(() => {
     background: red;
 }
 
-
-/* Container for all movie boxes */
 .movies-container{
     max-width: 1300px;
     margin-right: auto;
@@ -294,5 +277,5 @@ onMounted(() => {
 
 .comingSwiper {
   width: 100%;
-  height: auto; /* Adjust height as needed */
+  height: auto;
 }</style>

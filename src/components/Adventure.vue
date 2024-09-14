@@ -20,7 +20,6 @@ import interstellarImage from '@/assets/img/interstellar.jpg';
 import avengersEndgameImage from '@/assets/img/avengersendgame.jpg';
 import godzillaImage from '@/assets/img/godzilla.jpg';
 
-//pozadine
 import doctorStrangeBgImage from '@/assets/img/doctorstrangebg.jpg';
 import prometheusBgImage from '@/assets/img/prometheusbg.jpg';
 import morbiusBgImage from '@/assets/img/morbiusbg.jpg';
@@ -38,8 +37,6 @@ import interstellarBgImage from '@/assets/img/interstellarbg.jpg';
 import avengersEndgameBgImage from '@/assets/img/avengersendgamebg.jpg';
 import godzillaBgImage from '@/assets/img/godzillabg.jpg';
 
-
-// Reactive data for movies
 const movies = ref([
   { title: 'Doctor Strange', image: doctorStrangeImage, genre: 'Fantasy' },
   { title: 'Prometheus', image: prometheusImage, genre: 'Sci-Fi' },
@@ -58,7 +55,6 @@ const movies = ref([
   { title: 'Avengers: Endgame', image: avengersEndgameImage, genre: 'Action' },
   { title: 'Godzilla vs Kong', image: godzillaImage, genre: 'Sci-Fi' }
 ]);
-
 
 const movieImages={
   'Doctor Strange': doctorStrangeImage,
@@ -181,7 +177,6 @@ const movieDetails = {
     },
 };
 
-// Reactive data for selected movie
 const movie = ref({
   title: 'Doctor Strange',
   description: movieDetails['Doctor Strange'].description,
@@ -191,9 +186,8 @@ const movie = ref({
 
 const showPopup = ref(false);
 const popupMessage = ref('');
-const backgroundImage = ref(backgroundImages['The Witcher']);
+const backgroundImage = ref(backgroundImages['Doctor Strange']);
 
-// Handle slide click to update movie info and background image
 function handleSlideClick(title) {
   const newBackgroundImage = backgroundImages[title];
   const details = movieDetails[title];
@@ -212,54 +206,49 @@ function handleSlideClick(title) {
   }
 }
 
-// Method to play movie
-function playMovie() {
-  popupMessage.value = 'Play button clicked!';
-  showPopup.value = true;
-}
 
 function addToWishlist(movie) {
-  // Check if the user is logged in
   const loggedIn = localStorage.getItem('loggedIn') === 'true';
+  const userEmail = localStorage.getItem('userEmail'); 
 
-  if (!loggedIn) {
-    // If the user is not logged in, show an error notification
+  if (!loggedIn || !userEmail) {
     showNotification('You need to be logged in to add movies to your wishlist.', true);
     return;
   }
 
-  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+  let wishlist = JSON.parse(localStorage.getItem(`${userEmail}_wishlist`)) || [];
 
-  // Check if the movie is already in the wishlist
   const movieExists = wishlist.find(item => item.title === movie.title);
-  
+
   if (!movieExists) {
     const movieData = {
       title: movie.title,
       description: movie.description,
       type: movie.type,
       rating: movie.rating,
-      image: movieImages[movie.title] // Add the image property
+      image: movieImages[movie.title] 
     };
+
     wishlist.push(movieData);
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+    localStorage.setItem(`${userEmail}_wishlist`, JSON.stringify(wishlist));
+
     showNotification(`${movie.title} has been added to your wishlist!`);
   } else {
     showNotification(`${movie.title} is already in your wishlist.`, true);
   }
 }
 
-function showNotification(message, isError = false) {
-  popupMessage.value = message;  // Update the notification message
-  showPopup.value = true;        // Show the popup
 
-  // Automatically hide the popup after 2.5 seconds
+function showNotification(message, isError = false) {
+  popupMessage.value = message;  
+  showPopup.value = true;    
+
   setTimeout(() => {
-    showPopup.value = false;     // Hide the popup
+    showPopup.value = false;  
   }, 2500);
 }
 
-// Initialize Swiper after component mounts
 onMounted(() => {
   new Swiper('.mySwiper', {
     slidesPerView: 8,
@@ -274,9 +263,6 @@ onMounted(() => {
     },
   });
 
-  
-
-  // Initialize the default movie details and background
   handleSlideClick('Doctor Strange');
 });
 
@@ -285,13 +271,10 @@ onMounted(() => {
 
 <template>
   <div>
-    <!-- Background image container -->
     <div class="background-container">
-      <!-- This is the div that will act as the background -->
       <img :src="backgroundImage" class="background-image" alt="Background Image" />
     </div>
 
-    <!-- Movie Information Section -->
     <section class="movie-info-container">
       <div class="movie-info">
         <h1 id="movie-title">{{ movie.title }}</h1>
@@ -305,7 +288,6 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- Swiper Section -->
     <section class="sliding-container">
       <div class="swiper mySwiper">
         <div class="swiper-wrapper">
@@ -319,12 +301,10 @@ onMounted(() => {
             <p>{{ item.title }}</p>
           </div>
         </div>
-        <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
       </div>
     </section>
 
-    <!-- Popup Message -->
     <div 
   id="popup-message" 
   :class="['popup-message', { show: showPopup, error: isErrorPopup, success: !isErrorPopup }]"
@@ -343,7 +323,7 @@ onMounted(() => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1; /* Behind other elements */
+  z-index: -1; 
   overflow: hidden;
 }
 
@@ -356,12 +336,12 @@ onMounted(() => {
 body {
   margin: 0;
   padding: 0;
-  height: 100vh; /* Full height of viewport */
-  width: 100vw;  /* Full width of viewport */
-  overflow: hidden; /* Prevent scrollbars */
-  background-size: cover; /* Cover entire viewport */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* No repeating of the image */
+  height: 100vh; 
+  width: 100vw;  
+  overflow: hidden; 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
 }
 
 .sliding-container {
@@ -373,38 +353,37 @@ body {
 }
 
 .swiper {
-    width: 80%; /* Adjust the width of the swiper container */
+    width: 80%; 
     padding-top: 5px;
     padding-bottom: 10px;
     margin: 0 auto;
 }
 
 .swiper-slide {
-    width: calc(12.5% - 10px); /* Adjust the width of each slide considering the gap */
+    width: calc(12.5% - 10px); 
     border-radius: 8px;
     text-align: center;
     color: white;
     overflow: hidden;
     transition: transform 0.3s ease-in-out;
-    margin-right: 10px; /* Add a margin to create a gap between slides */
+    margin-right: 10px; 
 }
 
-/* Set a fixed size for images within swiper slides */
 .swiper-slide img {
-    width: 100%; /* Full width of the slide */
-    height: 250px; /* Fixed height */
-    object-fit: cover; /* Maintain aspect ratio and cover the area */
+    width: 100%; 
+    height: 250px; 
+    object-fit: cover; 
 }
 
 .swiper-slide p {
     padding: 3px;
-    font-size: 10px; /* Smaller font size */
+    font-size: 10px; 
     font-weight: bold;
     margin: 0;
 }
 
 .swiper-slide:last-child {
-    margin-right: 0; /* Remove margin on the last slide */
+    margin-right: 0; 
 }
 
 .swiper-slide:hover {
@@ -413,56 +392,55 @@ body {
 
 .swiper-button-next, .swiper-button-prev {
     color: red;
-    transform: scale(0.8); /* Reduce size of the navigation buttons */
+    transform: scale(0.8); 
     position: absolute;
-    top: 50%; /* Position in the middle vertically */
-    transform: translateY(-50%) scale(0.8); /* Center the buttons vertically and scale them down */
-    z-index: 10; /* Ensure buttons are above the swiper slides */
+    top: 50%; 
+    transform: translateY(-50%) scale(0.8); 
+    z-index: 10; 
 }
 
 .swiper-button-next {
-    margin-right: 100px; /* Move the right button 100px closer to the container */
+    margin-right: 100px; 
 }
   
   .swiper-button-prev {
-    margin-left: 100px; /* Move the left button 100px closer to the container */
+    margin-left: 100px; 
   }
 
   .swiper-button-next::after, .swiper-button-prev::after {
-    color: white; /* Change the color of the next arrow to a pinkish hue */
+    color: white; 
   }
   
   
 
 .movie-info-container {
-    position: absolute; /* Position fixed relative to the viewport */
-    top: 150px; /* Adjust vertical positioning if needed */
-    left: 20.8%; /* Center horizontally */
-    transform: translateX(-50%); /* Center the element based on its width */
-    width: 400px; /* Fixed width */
+    position: absolute; 
+    top: 150px; 
+    left: 20.8%; 
+    transform: translateX(-50%); 
+    width: 400px; 
     padding: 20px;
-    background: rgba(0, 0, 0, 0.8); /* Slightly darker background for better contrast */
+    background: rgba(0, 0, 0, 0.8); 
     color: #fff;
-    border-radius: 10px; /* Rounded corners */
-    border: 3px solid red; /* Accent border */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
-    z-index: 10; /* Ensure it's above other content */
+    border-radius: 10px;
+    border: 3px solid red; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+    z-index: 10; 
 }
 
-/* Movie Info */
 .movie-info {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: column; 
     align-items: center;
     gap: 15px;
 }
 
 .movie-poster {
-    flex: 0 0 100%; /* Full width */
-    max-width: 100px; /* Fixed size */
+    flex: 0 0 100%; 
+    max-width: 100px; 
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for emphasis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
 }
 
 .movie-poster img {
@@ -479,7 +457,7 @@ body {
     font-size: 22px;
     font-weight: bold;
     margin: 0 0 10px 0;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8); /* Shadow for text */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 #movie-description {
@@ -501,14 +479,14 @@ body {
 }
 
 #rating-stars {
-    font-family: 'Font Awesome 5 Free'; /* Assuming FontAwesome for star icons */
+    font-family: 'Font Awesome 5 Free'; 
     font-weight: 900;
     margin-left: 5px;
-    color: #ffeb3b; /* Gold color for stars */
+    color: #ffeb3b;
 }
 
 #play-button {
-    background: red; /* Gradient background */
+    background: red;
     color: #fff;
     border: none;
     padding: 12px 24px;
@@ -516,19 +494,18 @@ body {
     cursor: pointer;
     border-radius: 8px;
     transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Shadow for button */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 
 #play-button:hover {
-    background: red; /* Reversed gradient on hover */
-    transform: scale(1.05); /* Slightly larger button on hover */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Darker shadow on hover */
+    background: red; 
+    transform: scale(1.05); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); 
 }
 
-/* Button Container */
 .button-container {
     display: flex;
-    gap: 10px; /* Space between buttons */
+    gap: 10px; 
 }
 
 .btn {
@@ -548,7 +525,7 @@ body {
 
 .btn:hover {
     background: red;
-    transform: scale(1.05); /* Slightly larger button on hover */
+    transform: scale(1.05); 
 }
 
 .btn.wishlist-btn:hover {
@@ -557,30 +534,29 @@ body {
 
 .popup-message {
   position: fixed;
-  top: 65px; /* Position it from the top */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Adjust position to be fully centered */
+  top: 65px; 
+  left: 50%; 
+  transform: translateX(-50%); 
   padding: 15px 20px;
-  background-color: #333; /* Default dark background */
-  color: #fff; /* White text */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  font-size: 16px; /* Readable text size */
-  opacity: 0; /* Hidden by default */
-  transition: all 0.5s ease-in-out; /* Smooth show/hide */
-  z-index: 1000; /* Ensure it appears above other elements */
-  white-space: nowrap; /* Prevent wrapping for short messages */
-  max-width: 90%; /* Prevent it from stretching too wide */
-  overflow: hidden; /* Hide overflow if the message is too long */
+  background-color: #333; 
+  color: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  font-size: 16px; 
+  opacity: 0; 
+  transition: all 0.5s ease-in-out; 
+  z-index: 1000; 
+  white-space: nowrap; 
+  max-width: 90%; 
+  overflow: hidden; 
 }
 
 .popup-message.show {
   opacity: 1;
-  transform: translateX(-50%) translateY(0); /* Center the popup in place */
+  transform: translateX(-50%) translateY(0);
 }
 
 .popup-message.success {
   background-color: red 
 }
-
 </style>

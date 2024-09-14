@@ -2,7 +2,6 @@
   <section class="wishlist">
     <h2 class="heading">My Wishlist</h2>
     <div id="wishlist-container" class="wishlist-container">
-      <!-- Render wishlist items here -->
       <div v-if="wishlist.length === 0" class="empty-message">Your wishlist is empty.</div>
       <div v-for="(item, index) in wishlist" :key="item.title" class="wishlist-item">
         <img :src="item.image" :alt="item.title" class="wishlist-item-image">
@@ -16,7 +15,6 @@
 
   <div class="wishlist-wrapper">
     <div class="wishlist">
-      <!-- Additional wishlist content here -->
     </div>
   </div>
 
@@ -30,31 +28,44 @@ import { ref, onMounted } from 'vue';
 
 const wishlist = ref([]);
 const notificationMessage = ref('');
+const loggedInUserEmail = ref(''); 
 
-// Load wishlist data when the component is mounted
 onMounted(() => {
   loadWishlist();
 });
 
 function loadWishlist() {
-  let savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  console.log(savedWishlist); // Check the logged output
+  const userEmail = localStorage.getItem('userEmail'); 
+  loggedInUserEmail.value = userEmail;
+
+  if (!userEmail) {
+    notificationMessage.value = 'You are not logged in.';
+    return;
+  }
+
+  const savedWishlist = JSON.parse(localStorage.getItem(`${userEmail}_wishlist`)) || [];
   wishlist.value = savedWishlist;
-  
+
   if (savedWishlist.length === 0) {
     notificationMessage.value = 'Your wishlist is empty.';
   }
 }
 
 function removeFromWishlist(index) {
-  let savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  const removedMovie = savedWishlist[index];
-  savedWishlist.splice(index, 1); // Remove the movie at the specified index
-  localStorage.setItem('wishlist', JSON.stringify(savedWishlist));
-  
-  wishlist.value = savedWishlist; // Update the wishlist in the component
+  const userEmail = loggedInUserEmail.value;
+  if (!userEmail) {
+    notificationMessage.value = 'You are not logged in.';
+    return;
+  }
 
-  // Show notification for removal
+  let savedWishlist = JSON.parse(localStorage.getItem(`${userEmail}_wishlist`)) || [];
+  const removedMovie = savedWishlist[index];
+  savedWishlist.splice(index, 1); 
+
+  localStorage.setItem(`${userEmail}_wishlist`, JSON.stringify(savedWishlist));
+  
+  wishlist.value = savedWishlist; 
+
   showNotification(`${removedMovie.title} has been removed from your wishlist.`);
 }
 
@@ -62,17 +73,16 @@ function showNotification(message, isError = false) {
   notificationMessage.value = message;
   const notificationElement = document.getElementById('notification');
   notificationElement.className = isError ? 'notification error show' : 'notification show';
-  
-  // Show the notification
+
+
   notificationElement.classList.add('show');
-  
-  // Hide the notification after 2.5 seconds
+
+
   setTimeout(() => {
     notificationElement.classList.remove('show');
-  }, 2500); // Adjust the time as needed
+  }, 2500); 
 }
 </script>
-
 
 <style scoped>
 
@@ -88,7 +98,7 @@ function showNotification(message, isError = false) {
 }
 
 .wishlist-wrapper {
-    max-width: 800px; /* Adjust the max-width to fit your needs */
+    max-width: 800px; 
     padding: 10px;
   }
   
@@ -107,11 +117,10 @@ function showNotification(message, isError = false) {
     margin-top: 5px;
   }
   
- /* Wishlist item styling */
  .wishlist-item {
     position: relative;
-    width: 200px; /* Adjust the width to fit the image size */
-    height: 280px; /* Adjust the height to fit the image size */
+    width: 200px; 
+    height: 280px; 
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
@@ -120,12 +129,10 @@ function showNotification(message, isError = false) {
     transition: transform 0.3s ease-in-out;
 }
 
-/* Hover effect for wishlist item */
 .wishlist-item:hover {
     transform: scale(1.05);
 }
 
-/* Image styling */
 .wishlist-item img {
     width: 100%;
     height: 100%;
@@ -133,7 +140,6 @@ function showNotification(message, isError = false) {
     border-radius: 10px 10px 0 0;
 }
 
-/* Remove button styling */
 .wishlist-item .remove-btn {
     position: absolute;
     top: 10px;
@@ -145,64 +151,60 @@ function showNotification(message, isError = false) {
     padding: 4px 12px;
     border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.6);
-    opacity: 0; /* Initially hide the button */
-    transition: opacity 0.3s ease-in-out; /* Smooth transition for visibility */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
-/* Show remove button on hover */
 .wishlist-item:hover .remove-btn {
-    opacity: 1; /* Show the button on hover */
+    opacity: 1; 
 }
 
-/* Movie title styling */
 .wishlist-item .movie-title {
     position: absolute;
-    bottom: -50px; /* Initially position the title below the item */
+    bottom: -50px; 
     left: 0;
-    width: 100%; /* Full width of the item */
-    color: #fff; /* White text for better contrast */
+    width: 100%; 
+    color: #fff; 
     font-size: 14px;
     font-weight: bold;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.6); 
     padding: 4px 6px;
     border-radius: 5px;
     text-align: center;
-    transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Smooth transition for visibility */
-    opacity: 0; /* Initially hide the title */
+    transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out; 
+    opacity: 0; 
 }
 
-/* Show movie title on hover */
 .wishlist-item:hover .movie-title {
-    bottom: 0; /* Move title into view */
-    opacity: 1; /* Show the title on hover */
+    bottom: 0; 
+    opacity: 1; 
 }
 
-/* Notification at the bottom of the screen */
 .notification {
     position: fixed;
-    bottom: 20px; /* Space from the bottom of the screen */
+    bottom: 20px; 
     left: 50%;
     transform: translateX(-50%);
-    background-color: red; /* Dark background */
-    color: #fff; /* White text */
+    background-color: red; 
+    color: #fff; 
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    opacity: 0; /* Hidden by default */
-    visibility: hidden; /* Hide notification */
-    transition: opacity 0.5s ease, visibility 0.5s ease; /* Smooth transition */
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.5s ease, visibility 0.5s ease; 
     z-index: 2000;
     font-size: 1rem;
     text-align: center;
 }
 
 .notification.show {
-    opacity: 1; /* Make notification visible */
-    visibility: visible; /* Ensure it's visible */
+    opacity: 1; 
+    visibility: visible; 
 }
 
 .notification.error {
-    background-color: #f44336; /* Red background for error messages */
+    background-color: #f44336; 
 }
 </style>

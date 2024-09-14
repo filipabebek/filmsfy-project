@@ -33,7 +33,7 @@ import logo from '@/assets/img/logo.png';
 
 const route = useRoute();
 const router = useRouter();
-const isLoggedIn = ref(false); // Track login status
+const isLoggedIn = ref(false); 
 
 const isActiveLink = (routePath) => {
   return route.path === routePath;
@@ -42,7 +42,7 @@ const isActiveLink = (routePath) => {
 const scrollToMovies = () => {
   router.push({ path: '/', hash: '#movies' }).then(() => {
     const moviesSection = document.getElementById('movies');
-    const padding = 100; // Adjust this value to your liking
+    const padding = 100; 
 
     if (moviesSection) {
       const sectionTop = moviesSection.getBoundingClientRect().top + window.pageYOffset;
@@ -56,21 +56,17 @@ const scrollToMovies = () => {
   });
 };
 
-// Function to handle navigation to login page or logout
 const handleAuth = () => {
   if (isLoggedIn.value) {
-    // Logout
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('userEmail');
     isLoggedIn.value = false;
     router.push('/');
   } else {
-    // Navigate to login page
     router.push('/login');
   }
 };
 
-// Check login status on component mount
 onMounted(() => {
   isLoggedIn.value = localStorage.getItem('loggedIn') === 'true';
   window.addEventListener('loginStatusChanged', () => {
@@ -78,17 +74,13 @@ onMounted(() => {
   });
 });
 
-// Handle wishlist click
 const handleWishlistClick = () => {
   if (!isLoggedIn.value) {
-    // Redirect to login page
     router.push('/login');
   } else {
-    // Proceed to wishlist
     router.push('/wishlist');
   }
 };
-
 
 function mustRefresh() {
   router.go({ path: router.currentRoute.value.path, force: true });

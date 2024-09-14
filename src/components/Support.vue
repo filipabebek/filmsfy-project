@@ -3,7 +3,6 @@ import { reactive } from 'vue';
 
 import wallpaper from '@/assets/img/wallpaper.jpg';
 
-// Create a reactive form object
 const form = reactive({
   name: '',
   email: '',
@@ -11,12 +10,9 @@ const form = reactive({
   message: ''
 });
 
-// Handle form submission
 const handleSubmit = () => {
-  // Check if all fields are filled
   if (form.name && form.email && form.subject && form.message) {
     alert('Thank you for your message! We will get back to you shortly.');
-    // Reset the form fields
     form.name = '';
     form.email = '';
     form.subject = '';
@@ -78,7 +74,6 @@ const handleSubmit = () => {
   margin: 0;
 }
 
-
 .background-container::before {
     content: '';
     position: absolute;
@@ -86,32 +81,32 @@ const handleSubmit = () => {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Dark overlay with 60% opacity */
-    z-index: -1; /* Place overlay behind other content */
+    background: rgba(0, 0, 0, 0.6); 
+    z-index: -1; 
 }
 
 .contact-container {
-    background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    background: rgba(0, 0, 0, 0.8); 
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
     margin-left: 50px;
-    backdrop-filter: blur(10px); /* Optional: adds a blur effect to the background */
-    color: #ffffff; /* Ensures text is visible on the dark background */
+    backdrop-filter: blur(10px); 
+    color: #ffffff; 
 }
 
 .form-header h2 {
     margin: 0 0 10px;
     font-size: 24px;
-    color: white; /* White text for contrast */
+    color: white; 
 }
 
 .form-header p {
     margin: 0 0 20px;
     font-size: 16px;
-    color: #dddddd; /* Light grey text for contrast */
+    color: #dddddd; 
 }
 
 .contact-form .form-group {
@@ -123,7 +118,7 @@ const handleSubmit = () => {
     display: block;
     font-weight: bold;
     margin-bottom: 8px;
-    color: #bbbbbb; /* Light grey for labels */
+    color: #bbbbbb; 
 }
 
 .contact-form .form-group input,
@@ -133,8 +128,8 @@ const handleSubmit = () => {
     border: 1px solid #444;
     border-radius: 5px;
     font-size: 16px;
-    color: #ffffff; /* White text for input fields */
-    background-color: rgba(0, 0, 0, 0.7); /* Slightly transparent black background for inputs */
+    color: #ffffff; 
+    background-color: rgba(0, 0, 0, 0.7); 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
