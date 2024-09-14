@@ -1,29 +1,19 @@
-# filmsfy-project
+# Naziv aplikacije: FilmsFY
 
-This template should help get you started developing with Vue 3 in Vite.
+### Sastav tima:
+- Filipa Bebek <fbebek@student.unipu.hr>
+- Boris Vujica <bvujica@student.unipu.hr>
 
-## Recommended IDE Setup
+### Svrha:
+ - Fakultet: [Tehnički fakultetu u Puli](https://tfpu.unipu.hr/tfpu)
+ - Kolegij: [Programsko inženjerstvo](https://ntankovic.unipu.hr/PI)
+ - Mentor: [doc. dr. sc. Nikola Tanković](https://ntankovic.unipu.hr)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Customize configuration
+### Kratki opis funkcionalnosti
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Svrha aplikacije je omogućiti detaljan pregled i istraživanje širokog spektra filmova i serija dostupnih na raznim streaming platformama. Korisnicima je omogućeno da brzo i jednostavno pronađu informacije o filmovima i serijama, uključujući opis, recenzije, komentare i preporuke. Aplikacija također omogućuje stvaranje vlastite Wishliste pomoću koje korisnici organiziraju i prate filmove i serije koje ih zanimaju. 
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+### Zaduženja po članu tima
+Filipa Bebek - dizajn, sekcije, registracija, ...
+Boris Vujica - dizajn, forme, testiranje, ...
